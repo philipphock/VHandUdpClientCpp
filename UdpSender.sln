@@ -1,7 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "UdpSender", "UdpSender\UdpSender.vcxproj", "{38745490-02B2-4031-AD1F-9F8BE6092261}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "VHandBridge", "UdpSender\UdpSender.vcxproj", "{38745490-02B2-4031-AD1F-9F8BE6092261}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Test_SDK", "..\..\..\..\..\..\workspaces\cpp\Test_SDK\Test_SDK\Test_SDK.vcxproj", "{487935AB-915A-4D89-912C-4D12C701F00D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,6 +15,10 @@ Global
 		{38745490-02B2-4031-AD1F-9F8BE6092261}.Debug|Win32.Build.0 = Debug|Win32
 		{38745490-02B2-4031-AD1F-9F8BE6092261}.Release|Win32.ActiveCfg = Release|Win32
 		{38745490-02B2-4031-AD1F-9F8BE6092261}.Release|Win32.Build.0 = Release|Win32
+		{487935AB-915A-4D89-912C-4D12C701F00D}.Debug|Win32.ActiveCfg = Debug|Win32
+		{487935AB-915A-4D89-912C-4D12C701F00D}.Debug|Win32.Build.0 = Debug|Win32
+		{487935AB-915A-4D89-912C-4D12C701F00D}.Release|Win32.ActiveCfg = Release|Win32
+		{487935AB-915A-4D89-912C-4D12C701F00D}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

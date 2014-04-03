@@ -1,10 +1,19 @@
 #pragma once
+#pragma once
+#include "UdpInterface.h"
+#include "JsonProtocol.h"
+
 class GloveDataReader
 {
+private:
+	UdpInterface udp;
+	JsonProtocol ptcl;
+	void sendToRemote(void);
+
 public:
 	GloveDataReader(void);
 	~GloveDataReader(void);
-	enum ConnectionType {USB,WIFI};
+	static enum ConnectionType {USB,WIFI};
 
 	/**
 		connetcs to the glove, return true if connection was successful
@@ -16,5 +25,7 @@ public:
 	 signature not yet specified
 	**/
 	void readValues(void);
+
+
 };
 

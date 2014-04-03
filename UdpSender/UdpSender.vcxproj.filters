@@ -33,18 +33,24 @@
     <ClInclude Include="UdpClient.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
+    <ClInclude Include="GloveDataReader.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="UdpSender.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
     <ClCompile Include="UdpInterface.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
     <ClCompile Include="UdpClient.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="GloveDataReader.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
   </ItemGroup>
