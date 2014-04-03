@@ -10,7 +10,10 @@ public:
 	~JsonProtocol(void){};
 
 
-
+	/**
+		stores a json in outData with the values afterwards. Alternatively use void createJSONString(string &outData,int thumb,int index,int middle,int ring,int pinky,int hand_yaw,int hand_pitch,int hand_roll,int hand_x,int hand_y, int hand_z)
+		the values afterwards represent rotation of the fingers and the hand, also the location of the hand. Rotation of fingers are in range 0..-90 (degree), where 0 is fully straight, -90 is fully curved. The Rotation of the hand is represented as euler (yaw, pitch, roll) in degree
+	**/
 	void createJSONString(string &outData,const int finger[5],const int hand_rotation[3],const int hand_location[3]) {
 		stringstream tmp;
 		tmp << "{\"finger\":[";
@@ -31,8 +34,16 @@ public:
 		
 		outData = tmp.str();
 	}
-		
 
+	/**
+		stores a json in outData with the values afterwards. This is a wrapper for createJSONString(string &outData,const int finger[5],const int hand_rotation[3],const int hand_location[3])
+	**/
+	void createJSONString(string &outData,int thumb,int index,int middle,int ring,int pinky,int hand_yaw,int hand_pitch,int hand_roll,int hand_x,int hand_y, int hand_z){
+		int finger[5] = {thumb,index,middle,ring,pinky};
+		int handRot[3] = {hand_yaw,hand_pitch,hand_roll};
+		int handLoc[3] = {hand_x,hand_y,hand_z};
+		createJSONString(outData,finger,handRot,handLoc);
+	}
 
 };
 

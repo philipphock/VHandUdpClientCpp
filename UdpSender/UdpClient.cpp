@@ -6,13 +6,13 @@
 #include <iostream>
 #include <cstring>
 #include <string>
+#include <sstream>
 
 #ifndef UNICODE
 #define UNICODE
 #endif
 
 #define WIN32_LEAN_AND_MEAN
-
 
 
 UdpClient::UdpClient(int port)
@@ -31,7 +31,10 @@ UdpClient::UdpClient(int port)
     // Initialize Winsock
     iResult = WSAStartup(MAKEWORD(2, 2), &wsaData);
     if (iResult != NO_ERROR) {
-        wprintf(L"WSAStartup failed with error: %d\n", iResult);
+		std::stringstream serr;
+		serr << "WSAStartup failed with error: "<<iResult;
+		throw serr.str();
+        
         return;
     }
 
@@ -39,7 +42,9 @@ UdpClient::UdpClient(int port)
     // Create a socket for sending data
     s = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
     if (s == INVALID_SOCKET) {
-        wprintf(L"socket failed with error: %ld\n", WSAGetLastError());
+		std::stringstream serr;
+		serr << "socket failed with error: "<<WSAGetLastError();
+		throw serr.str();
         WSACleanup();
         return;
     }
@@ -61,16 +66,20 @@ UdpClient::UdpClient(int port)
 }
 
 void UdpClient::send(const std::string& toSend){
-	std::cout << "sending data: "<< toSend << std::endl;
-	
+	if (iResult != NO_ERROR){
+		std::stringstream serr;
+		serr << "socket not initialized\n";
+		throw serr.str();
+	}
 	const char* cstr = toSend.c_str();
 	
-	wprintf(L"Sending a datagram to the receiver...\n");
     iResult = sendto(s,cstr, strlen(cstr), 0, (SOCKADDR *)  addr, sizeof (*addr));
     if (iResult == SOCKET_ERROR) {
-        wprintf(L"sendto failed with error: %d\n", WSAGetLastError());
+		std::stringstream serr;
+		serr << "sendto failed with error: " << WSAGetLastError() << "\n";
         closesocket(s);
         WSACleanup();
+		throw serr.str();
         return;
     }
     
@@ -81,25 +90,16 @@ void UdpClient::send(const std::string& toSend){
 UdpClient::~UdpClient(void)
 {
 	    // When the application is finished sending, close the socket.
-    wprintf(L"Finished sending. Closing socket.\n");
+    
     iResult = closesocket(s);
     if (iResult == SOCKET_ERROR) {
-        wprintf(L"closesocket failed with error: %d\n", WSAGetLastError());
+		std::stringstream serr;
+		serr << "closesocket failed with error: " << WSAGetLastError() << "\n";
+        closesocket(s);
         WSACleanup();
+		throw serr.str();
         return;
     }
 }
 
 
-
-
-/*
-
-
-int main()
-{
-
-
-    return 0;
-}
-*/
