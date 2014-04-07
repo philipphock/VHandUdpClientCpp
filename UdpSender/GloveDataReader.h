@@ -12,10 +12,7 @@ private:
 	VHand30 *dataglove;
 	int connectionTypeRaw;
 
-	/**
-		sends a data value to the remote endpoint via udp using the JsonProtocol
-	**/
-	void sendToRemote(void);
+	
 
 public:
 	GloveDataReader(void);
@@ -28,13 +25,12 @@ public:
 	**/
 	bool connect(ConnectionType type,unsigned int maxTicks,char* ip);
 
+	
 	/**
-	 signature not yet specified
+	reads one value from the glove,
+	finger[5] are values from 0..1
 	**/
-	/**
-	reads one value from the glove
-	**/
-	void readValues(void);
+	unsigned int GloveDataReader::readValues(double finger[5],double rotation[3]);
 
 
 	/**
@@ -42,6 +38,10 @@ public:
 	**/
 	void status(void);
 
+	/**
+		sends data values to the remote endpoint via udp using the JsonProtocol
+	**/
+	void GloveDataReader::sendToRemote(double finger[5],double rotation[3]);
 
 	/** 
 		Disconnects the glove

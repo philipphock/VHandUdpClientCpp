@@ -52,17 +52,26 @@ bool GloveDataReader::connect(ConnectionType type,unsigned int maxTicks,char* ip
 }
 
 
-void GloveDataReader::readValues(){
-	sendToRemote();
+unsigned int GloveDataReader::readValues(double finger[5],double rotation[3]){
+	int connstatus = dataglove->GetConnectionStatus();
+	if(connstatus == USB_CONNECTED || connstatus == WIFI_CONNECTED){
+		dataglove->GetFingers(finger);
+		dataglove->GetAttitude(&rotation[0],&rotation[1],&rotation[2]);
+		unsigned int time = dataglove->GetLastPackageTime();
+		return time;
+	}else{
+		throw "not connected";
+	}
+	
 }
 
 
-void GloveDataReader::sendToRemote(){
-	int finger[5] = {0,-90,-90,-90,-90};
+void GloveDataReader::sendToRemote(double finger[5],double rotation[3]){
+	int fingerCalced[5] = {0,-90,-90,-90,-90};
 	int handRot[3] = {0,0,0};
 	int handLoc[3] = {0,0,0};
 	string jsonString;
-	ptcl.createJSONString(jsonString,finger,handLoc,handRot);
+	ptcl.createJSONString(jsonString,fingerCalced,handLoc,handRot);
 	udp.send(jsonString);
 }
 
