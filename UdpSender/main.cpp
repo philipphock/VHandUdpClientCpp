@@ -9,7 +9,7 @@ GloveDataReader *gloveReader;
 
 void success(){
 	cout << "connected with dataglove" << endl;	
-	gloveReader->readValues();
+	gloveReader->status();
 	cin.get();
 }
 
@@ -20,7 +20,7 @@ int _tmain(int argc, _TCHAR* argv[])
 
 	cout << "connecting to glove. ";
 	cout << "Try USB..." << endl;
-	if (gloveReader->connect(GloveDataReader::ConnectionType::USB)){
+	if (gloveReader->connect(GloveDataReader::ConnectionType::USB,5000,"127.0.0.1")){
 		cout << "success" << endl;	
 		success();
 		return 0;
@@ -28,7 +28,7 @@ int _tmain(int argc, _TCHAR* argv[])
 
 
 	cout << "failed, try Wifi... " << endl;	
-	if (gloveReader->connect(GloveDataReader::ConnectionType::WIFI)){
+	if (gloveReader->connect(GloveDataReader::ConnectionType::WIFI,5000,"127.0.0.1")){
 		cout << "success" << endl;	
 		success();
 		return 0;
