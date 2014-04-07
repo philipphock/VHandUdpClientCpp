@@ -67,14 +67,28 @@ unsigned int GloveDataReader::readValues(double finger[5],double rotation[3]){
 
 
 void GloveDataReader::sendToRemote(double finger[5],double rotation[3]){
-	int fingerCalced[5] = {0,-90,-90,-90,-90};
-	int handRot[3] = {0,0,0};
+
+	int fingerCalced[5];
+	int handRot[3];
+
+	for (int i = 0;i < 5; i++){
+		fingerCalced[i] = mapCoordinates(finger[i]);
+	}
+	
+	//TODO!
+	//for (int i = 0;i < 3; i++){
+	//	handRot[i] = mapCoordinates(rotation[i]);
+	//}
+
 	int handLoc[3] = {0,0,0};
 	string jsonString;
 	ptcl.createJSONString(jsonString,fingerCalced,handLoc,handRot);
 	udp.send(jsonString);
 }
 
+int GloveDataReader::mapCoordinates(double x){
+	return (int) (-0.9*x);
+}
 
 void GloveDataReader::disconnect(){
 	dataglove->Disconnect();

@@ -11,7 +11,7 @@ private:
 	JsonProtocol ptcl;
 	VHand30 *dataglove;
 	int connectionTypeRaw;
-
+	int mapCoordinates(double x);
 	
 
 public:
