@@ -17,13 +17,14 @@ private:
 public:
 	GloveDataReader(void);
 	~GloveDataReader(void);
+	bool isConnected(void);
 	static enum ConnectionType {USB,WIFI};
 
 	/**
 		connetcs to the glove, return true if connection was successful
 		the type of connection is specified by type:ConnectionType
 	**/
-	bool connect(ConnectionType type,unsigned int maxTicks,char* ip);
+	bool connect(ConnectionType type,unsigned int maxTicks,int comport, char* ip);
 
 	
 	/**

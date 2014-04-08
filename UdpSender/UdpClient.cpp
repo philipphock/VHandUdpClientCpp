@@ -33,7 +33,8 @@ UdpClient::UdpClient(int port)
     if (iResult != NO_ERROR) {
 		std::stringstream serr;
 		serr << "WSAStartup failed with error: "<<iResult;
-		throw serr.str();
+		fprintf(stderr,serr.str().c_str());
+		//throw serr.str().c_str();
         
         return;
     }
@@ -44,7 +45,8 @@ UdpClient::UdpClient(int port)
     if (s == INVALID_SOCKET) {
 		std::stringstream serr;
 		serr << "socket failed with error: "<<WSAGetLastError();
-		throw serr.str();
+		fprintf(stderr,serr.str().c_str());
+		//throw serr.str().c_str();
         WSACleanup();
         return;
     }
@@ -55,7 +57,7 @@ UdpClient::UdpClient(int port)
     addr->sin_family = AF_INET;
     addr->sin_port = htons(Port);
     addr->sin_addr.s_addr = inet_addr("127.0.0.1");
-
+	std::cout << "socket init" << std::endl;
     //---------------------------------------------
     // Send a datagram to the receiver
     
@@ -66,11 +68,6 @@ UdpClient::UdpClient(int port)
 }
 
 void UdpClient::send(const std::string& toSend){
-	if (iResult != NO_ERROR){
-		std::stringstream serr;
-		serr << "socket not initialized\n";
-		throw serr.str();
-	}
 	const char* cstr = toSend.c_str();
 	
     iResult = sendto(s,cstr, strlen(cstr), 0, (SOCKADDR *)  addr, sizeof (*addr));
@@ -79,7 +76,9 @@ void UdpClient::send(const std::string& toSend){
 		serr << "sendto failed with error: " << WSAGetLastError() << "\n";
         closesocket(s);
         WSACleanup();
-		throw serr.str();
+		fprintf(stderr,serr.str().c_str());
+
+		//throw serr.str().c_str();
         return;
     }
     

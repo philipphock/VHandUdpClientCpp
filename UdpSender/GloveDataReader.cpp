@@ -25,14 +25,14 @@ GloveDataReader::~GloveDataReader(void)
 	connects to the glove by the specified type
 	returns true on success, false otherwise
 **/
-bool GloveDataReader::connect(ConnectionType type,unsigned int maxTicks,char* ip){
+bool GloveDataReader::connect(ConnectionType type,unsigned int maxTicks,int comport, char* ip){
 	int ret=-1;
 	if (type == ConnectionType::USB){
-		dataglove->SetConnectionParameters(1,ip);
+		dataglove->SetConnectionParameters(comport,ip);
 		int ret = dataglove->Connect(CONN_USB,STREAM_FINGERS_QUATERNION);
 		connectionTypeRaw = CONN_USB;
 	}else{
-		dataglove->SetConnectionParameters(1,ip);
+		dataglove->SetConnectionParameters(comport,ip);
 		int ret = dataglove->Connect(CONN_WIFI,STREAM_FINGERS_QUATERNION);
 		connectionTypeRaw = CONN_WIFI;
 	}
@@ -60,34 +60,50 @@ unsigned int GloveDataReader::readValues(double finger[5],double rotation[3]){
 		unsigned int time = dataglove->GetLastPackageTime();
 		return time;
 	}else{
-		throw "not connected";
+		fprintf(stderr,"not connected");
+		//throw "not connected";
 	}
 	
 }
 
+bool GloveDataReader::isConnected(void){
+	int cs = dataglove->GetConnectionStatus();
+	return cs == USB_CONNECTED || WIFI_CONNECTED;
+}
 
 void GloveDataReader::sendToRemote(double finger[5],double rotation[3]){
 
 	int fingerCalced[5];
 	int handRot[3];
 
-	for (int i = 0;i < 5; i++){
-		fingerCalced[i] = mapCoordinates(finger[i]);
-	}
+	
+	fingerCalced[0] = mapCoordinates(finger[4]);
+	fingerCalced[1] = mapCoordinates(finger[3]);
+	fingerCalced[2] = mapCoordinates(finger[2]);
+	fingerCalced[3] = mapCoordinates(finger[1]);
+	fingerCalced[4] = mapCoordinates(finger[0]);
 	
 	//TODO!
 	//for (int i = 0;i < 3; i++){
 	//	handRot[i] = mapCoordinates(rotation[i]);
 	//}
 
+	for (int i = 0;i < 3; i++){
+		handRot[i] = (int) rotation[i];
+	}
+
 	int handLoc[3] = {0,0,0};
 	string jsonString;
-	ptcl.createJSONString(jsonString,fingerCalced,handLoc,handRot);
+	ptcl.createJSONString(jsonString,fingerCalced,handRot,handLoc);
 	udp.send(jsonString);
 }
 
 int GloveDataReader::mapCoordinates(double x){
-	return (int) (-0.9*x);
+	x-=15.0;
+	if (x<0)x=0;
+	int ret = (int) (-0.9*x);
+
+	return ret;
 }
 
 void GloveDataReader::disconnect(){
