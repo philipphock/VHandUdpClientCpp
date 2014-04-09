@@ -37,7 +37,7 @@ bool GloveDataReader::connect(ConnectionType type,unsigned int maxTicks,int comp
 		connectionTypeRaw = CONN_WIFI;
 	}
 
-	fprintf(stderr,"CONNECT RET: %d\n",ret);
+	
 	long start = ::GetTickCount();
 	while ((dataglove->Connected == NOT_CONNECTED))
 	{
@@ -100,10 +100,10 @@ void GloveDataReader::sendToRemote(double finger[5],double rotation[3]){
 
 void GloveDataReader::disconnect(){
 	dataglove->Disconnect();
-	Sleep(1000);
+	Sleep(100);
 	//turn off module
 	dataglove->TurnOFF(connectionTypeRaw);
-	Sleep(1000);
+	Sleep(100);
 }
 
 void GloveDataReader::status(){
