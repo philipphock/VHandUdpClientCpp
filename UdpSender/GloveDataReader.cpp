@@ -88,9 +88,10 @@ void GloveDataReader::sendToRemote(double finger[5],double rotation[3]){
 	//	handRot[i] = mapCoordinates(rotation[i]);
 	//}
 
-	for (int i = 0;i < 3; i++){
-		handRot[i] = (int) rotation[i];
-	}
+	
+	handRot[0] = (int) rotation[0];
+	handRot[1] = (int) rotation[1];
+	handRot[2] = (int) rotation[2];
 
 	int handLoc[3] = {0,0,0};
 	string jsonString;

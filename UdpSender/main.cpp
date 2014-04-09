@@ -28,6 +28,8 @@ void success(){
 //		rot[1] = 0.0;
 //		rot[2] = 0.0;
 		gloveReader->sendToRemote(finger,rot);
+		
+		printf("(%.1f, %.1f, %.1f)\n",rot[0],rot[1],rot[2]);
 	}
 		cin.get();
 }

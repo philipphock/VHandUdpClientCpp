@@ -1,4 +1,4 @@
-﻿Der Buildvorgang wurde am 08.04.2014 18:33:32 gestartet.
+﻿Der Buildvorgang wurde am 09.04.2014 15:13:07 gestartet.
      1>Projekt "C:\Users\phil\Documents\Visual Studio 2012\Projects\UdpSender\UdpSender\UdpSender.vcxproj" auf Knoten "2", Build Ziel(e).
      1>ClCompile:
          C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /IC:\VHandSDK /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yu"stdafx.h" /Fp"Debug\VHandBridge.pch" /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt GloveDataReader.cpp
@@ -15,4 +15,4 @@
 
 Build erfolgreich.
 
-Verstrichene Zeit 00:00:02.13
+Verstrichene Zeit 00:00:01.97

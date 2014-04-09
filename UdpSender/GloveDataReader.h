@@ -29,7 +29,8 @@ public:
 	
 	/**
 	reads one value from the glove,
-	finger[5] are values from 0..1
+	finger[5] are values from 0..100
+	rotation: [roll,pitch,yaw] in degree
 	**/
 	unsigned int GloveDataReader::readValues(double finger[5],double rotation[3]);
 
