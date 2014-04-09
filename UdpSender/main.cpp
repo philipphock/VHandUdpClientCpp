@@ -8,9 +8,6 @@ using namespace std;
 GloveDataReader *gloveReader;
 
 void success(){
-	//cout << "connected with dataglove" << endl;	
-	//gloveReader->status();
-	//cin.get();
 	double finger[5];
 	double rot[3];
 
@@ -19,17 +16,9 @@ void success(){
 	while(gloveReader->isConnected()){
 		Sleep(100);
 		gloveReader->readValues(finger,rot);
-//		finger[0] = 0;
-//		finger[1] = 0;
-//		finger[2] = 0;
-//		finger[3] = 0;
-//		finger[4] = 0;
-//		rot[0] = 0.0;
-//		rot[1] = 0.0;
-//		rot[2] = 0.0;
 		gloveReader->sendToRemote(finger,rot);
 		
-		printf("(%.1f, %.1f, %.1f)\n",rot[0],rot[1],rot[2]);
+		
 	}
 		cin.get();
 }

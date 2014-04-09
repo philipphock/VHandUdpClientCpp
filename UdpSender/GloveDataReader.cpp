@@ -76,17 +76,13 @@ void GloveDataReader::sendToRemote(double finger[5],double rotation[3]){
 	int fingerCalced[5];
 	int handRot[3];
 
+	//mapping the order of the finger
+	fingerCalced[0] = finger[4];
+	fingerCalced[1] = finger[3];
+	fingerCalced[2] = finger[2];
+	fingerCalced[3] = finger[1];
+	fingerCalced[4] = finger[0];
 	
-	fingerCalced[0] = mapCoordinates(finger[4]);
-	fingerCalced[1] = mapCoordinates(finger[3]);
-	fingerCalced[2] = mapCoordinates(finger[2]);
-	fingerCalced[3] = mapCoordinates(finger[1]);
-	fingerCalced[4] = mapCoordinates(finger[0]);
-	
-	//TODO!
-	//for (int i = 0;i < 3; i++){
-	//	handRot[i] = mapCoordinates(rotation[i]);
-	//}
 
 	
 	handRot[0] = (int) rotation[0];
@@ -99,13 +95,8 @@ void GloveDataReader::sendToRemote(double finger[5],double rotation[3]){
 	udp.send(jsonString);
 }
 
-int GloveDataReader::mapCoordinates(double x){
-	x-=15.0;
-	if (x<0)x=0;
-	int ret = (int) (-0.9*x);
 
-	return ret;
-}
+
 
 void GloveDataReader::disconnect(){
 	dataglove->Disconnect();
